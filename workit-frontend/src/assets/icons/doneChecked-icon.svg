@@ -1,0 +1,12 @@
+<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_5434_10)">
+<circle cx="5" cy="5" r="4.75" stroke="#BEBEBE" stroke-width="0.5"/>
+<ellipse cx="1.3149" cy="2.13979" rx="1.3149" ry="2.13979" transform="matrix(0.823772 -0.566922 0.611038 0.791602 1 5.33398)" fill="#BEBEBE"/>
+<ellipse cx="1.26232" cy="3.19754" rx="1.26232" ry="3.19754" transform="matrix(0.871755 0.489942 -0.533262 0.84595 6.48047 2)" fill="#BEBEBE"/>
+</g>
+<defs>
+<clipPath id="clip0_5434_10">
+<rect width="10" height="10" fill="white"/>
+</clipPath>
+</defs>
+</svg>
