@@ -1,3 +1,4 @@
+import type { TaskType } from "../types/types";
 import Icon from "./Icon";
 
 export default function Main() {
@@ -50,19 +51,53 @@ export default function Main() {
       ],
     },
   ];
+  function createDay(date: Date) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
+  const today = createDay(new Date());
+  const tomorrow = createDay(new Date(today));
+  tomorrow.setDate(today.getDate() + 1);
+  function isSame(a: Date, b: Date) {
+    return (
+      a.getFullYear() == b.getFullYear() &&
+      a.getMonth() == b.getMonth() &&
+      a.getDate() == b.getDate()
+    );
+  }
+  function categorizedTasks() {
+    const emptyCategories = {
+      overdue: [] as TaskType[],
+      today: [] as TaskType[],
+      tomorrow: [] as TaskType[],
+      future: [] as TaskType[],
+    };
+    if (!TasksData) return emptyCategories;
+    return TasksData.reduce((acc, itemTask) => {
+      const date = new Date(itemTask.date);
+      if (isSame(date, today)) {
+        acc.today.push(...itemTask.tasks);
+      } else if (isSame(date, tomorrow)) {
+        acc.tomorrow.push(...itemTask.tasks);
+      } else if (date.toISOString() < today.toISOString()) {
+        acc.overdue.push(...itemTask.tasks);
+      } else {
+        acc.future.push(...itemTask.tasks);
+      }
+      return acc;
+    }, emptyCategories);
+  }
+  const entries = Object.entries(categorizedTasks());
   return (
     <main className="mt-4 flex flex-col gap-4">
       <p className="font-montserrat text-center font-medium text-base">Tasks</p>
-      {TasksData.map((item) => (
-        <section key={item.date} className="flex flex-col gap-1">
+      {entries.map(([category, tasks]) => (
+        <section key={category} className="flex flex-col gap-1">
           <div className="flex gap-2 items-center">
             <Icon name="showMore" size={12} />
-            <p className="text-[#FF8A8A] text-sm font-montserrat">
-              {item.date}
-            </p>
+            <p className="text-[#FF8A8A] text-sm font-montserrat">{category}</p>
           </div>
           <div className="">
-            {item.tasks.map((itemTask) => (
+            {tasks.map((itemTask) => (
               <div className="flex gap-2">
                 <Icon name="done" size={12} />
                 <div>
