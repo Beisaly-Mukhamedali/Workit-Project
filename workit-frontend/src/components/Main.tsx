@@ -55,6 +55,8 @@ export default function Main() {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
   const today = createDay(new Date());
+  const yesterday = createDay(new Date());
+  yesterday.setDate(today.getDate() - 1);
   const tomorrow = createDay(new Date(today));
   tomorrow.setDate(today.getDate() + 1);
   function isSame(a: Date, b: Date) {
@@ -78,6 +80,12 @@ export default function Main() {
         acc.today.push(...itemTask.tasks);
       } else if (isSame(date, tomorrow)) {
         acc.tomorrow.push(...itemTask.tasks);
+      } else if (isSame(date, yesterday)) {
+        const yesterdayTasks = itemTask.tasks.map((item) => ({
+          ...item,
+          time: item.time + " (Yesterday)",
+        }));
+        acc.overdue.push(...yesterdayTasks);
       } else if (date.toISOString() < today.toISOString()) {
         acc.overdue.push(...itemTask.tasks);
       } else {
