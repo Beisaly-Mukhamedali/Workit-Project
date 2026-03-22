@@ -68,28 +68,28 @@ export default function Main() {
   }
   function categorizedTasks() {
     const emptyCategories = {
-      overdue: [] as TaskType[],
-      today: [] as TaskType[],
-      tomorrow: [] as TaskType[],
-      future: [] as TaskType[],
+      Overdue: [] as TaskType[],
+      Today: [] as TaskType[],
+      Tomorrow: [] as TaskType[],
+      Future: [] as TaskType[],
     };
     if (!TasksData) return emptyCategories;
     return TasksData.reduce((acc, itemTask) => {
       const date = new Date(itemTask.date);
       if (isSame(date, today)) {
-        acc.today.push(...itemTask.tasks);
+        acc.Today.push(...itemTask.tasks);
       } else if (isSame(date, tomorrow)) {
-        acc.tomorrow.push(...itemTask.tasks);
+        acc.Tomorrow.push(...itemTask.tasks);
       } else if (isSame(date, yesterday)) {
         const yesterdayTasks = itemTask.tasks.map((item) => ({
           ...item,
           time: item.time + " (Yesterday)",
         }));
-        acc.overdue.push(...yesterdayTasks);
+        acc.Overdue.push(...yesterdayTasks);
       } else if (date.toISOString() < today.toISOString()) {
-        acc.overdue.push(...itemTask.tasks);
+        acc.Overdue.push(...itemTask.tasks);
       } else {
-        acc.future.push(...itemTask.tasks);
+        acc.Future.push(...itemTask.tasks);
       }
       return acc;
     }, emptyCategories);
@@ -102,7 +102,19 @@ export default function Main() {
         <section key={category} className="flex flex-col gap-1">
           <div className="flex gap-2 items-center">
             <Icon name="showMore" size={12} />
-            <p className="text-[#FF8A8A] text-sm font-montserrat">{category}</p>
+            <p
+              className={`${
+                category == "Overdue"
+                  ? "text-[#FF8A8A]"
+                  : category == "Today"
+                    ? "text-[#74FFC5]"
+                    : category == "Tomorrow"
+                      ? "text-[#6B78CD]"
+                      : "text-[#EF51D5]"
+              } text-sm font-montserrat`}
+            >
+              {category}
+            </p>
           </div>
           <div className="">
             {tasks.map((itemTask) => (
