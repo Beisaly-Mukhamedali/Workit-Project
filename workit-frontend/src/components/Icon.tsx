@@ -26,7 +26,7 @@ const icons = {
   teams: Teams,
 };
 
-interface IconProps {
+export interface IconProps {
   name: keyof typeof icons;
   size?: number;
   className?: string;
@@ -34,5 +34,7 @@ interface IconProps {
 
 export default function Icon({ name, size = 16, className }: IconProps) {
   const SvgIcon = icons[name];
-  return <SvgIcon width={size} height={size} className={className} />;
+  return (
+    <SvgIcon width={size} height={size} className={`shrink-0 ${className}`} />
+  );
 }

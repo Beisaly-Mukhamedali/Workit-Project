@@ -1,10 +1,12 @@
+import { useState } from "react";
 import type { TaskType } from "../types/types";
 import Icon from "./Icon";
+import IconButton from "./IconButton";
 
 export default function Main() {
   const TasksData = [
     {
-      date: "2026-03-21",
+      date: "2026-03-22",
       tasks: [
         { content: "Позвонить в банк по поводу кредита", time: "09:00" },
         { content: "Купить продукты на неделю", time: "11:30" },
@@ -95,13 +97,31 @@ export default function Main() {
     }, emptyCategories);
   }
   const entries = Object.entries(categorizedTasks());
+  const [isShown, setIsShown] = useState<string[]>([
+    "Overdue",
+    "Today",
+    "Tomorrow",
+  ]);
   return (
-    <main className="mt-4 flex flex-col gap-4">
-      <p className="font-montserrat text-center font-medium text-base">Tasks</p>
+    <main className="mt-4 flex flex-col">
+      <p className="font-montserrat text-center font-medium text-base mb-4">
+        Tasks
+      </p>
       {entries.map(([category, tasks]) => (
         <section key={category} className="flex flex-col gap-1">
           <div className="flex gap-2 items-center">
-            <Icon name="showMore" size={12} />
+            <IconButton
+              name="showMore"
+              size={12}
+              onClick={() =>
+                setIsShown(
+                  isShown.includes(category)
+                    ? isShown.filter((item) => item != category)
+                    : [...isShown, category],
+                )
+              }
+              className="cursor-pointer"
+            />
             <p
               className={`${
                 category == "Overdue"
@@ -116,22 +136,24 @@ export default function Main() {
               {category}
             </p>
           </div>
-          <div className="">
-            {tasks.map((itemTask) => (
-              <div className="flex gap-2">
-                <Icon name="done" size={12} />
-                <div>
-                  <p className="font-roboto text-xs">{itemTask.content}</p>
-                  <div className="flex gap-1">
-                    <Icon name="clock" size={8} />
-                    <p className="font-roboto text-[6px] text-[#7DE484]">
-                      {itemTask.time}
-                    </p>
+          {isShown.includes(category) && (
+            <div className="flex flex-col gap-1">
+              {tasks.map((itemTask) => (
+                <div className="flex gap-2">
+                  <Icon name="done" size={12} />
+                  <div>
+                    <p className="font-roboto text-xs">{itemTask.content}</p>
+                    <div className="flex gap-1">
+                      <Icon name="clock" size={8} />
+                      <p className="font-roboto text-[6px] text-[#7DE484]">
+                        {itemTask.time}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </section>
       ))}
     </main>
