@@ -108,8 +108,8 @@ export default function Main() {
         Tasks
       </p>
       {entries.map(([category, tasks]) => (
-        <section key={category} className="flex flex-col gap-1">
-          <div className="flex gap-2 items-center">
+        <section key={category} className="flex flex-col">
+          <div className="flex gap-2 items-center mb-1">
             <IconButton
               name="showMore"
               size={12}
@@ -139,19 +139,25 @@ export default function Main() {
           {isShown.includes(category) && (
             <div className="flex flex-col gap-1">
               {tasks.map((itemTask) => (
-                <div className="flex gap-2">
-                  <Icon name="done" size={12} />
-                  <div>
-                    <p className="font-roboto text-xs">{itemTask.content}</p>
-                    <div className="flex gap-1">
-                      <Icon name="clock" size={8} />
-                      <p className="font-roboto text-[6px] text-[#7DE484]">
-                        {itemTask.time}
-                      </p>
+                <div>
+                  <div className="flex gap-2">
+                    <Icon name="done" size={12} />
+                    <div>
+                      <p className="font-roboto text-xs">{itemTask.content}</p>
+                      <div className="flex gap-1">
+                        <Icon name="clock" size={8} />
+                        <p className="font-roboto text-[6px] text-[#7DE484]">
+                          {itemTask.time}
+                        </p>
+                      </div>
                     </div>
                   </div>
+                  <hr className="my-1 rounded-lg text-[#182639]" />
                 </div>
               ))}
+              <button className="rounded-2xl bg-[#232E3C] font-roboto text-[10px] text-[#BEBEBE] p-0.5 cursor-pointer">
+                Add task
+              </button>
             </div>
           )}
         </section>
