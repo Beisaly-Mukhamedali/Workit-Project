@@ -28,6 +28,7 @@ const icons = {
 
 export interface IconProps {
   name: keyof typeof icons;
+  key?: string;
   size?: number;
   className?: string;
 }

@@ -2,54 +2,120 @@ import { useState } from "react";
 import type { TaskType } from "../types/types";
 import Icon from "./Icon";
 import IconButton from "./IconButton";
+import { v4 as uuidv4 } from "uuid";
+const TasksData = [
+  {
+    id: uuidv4(),
+    content: "Позвонить в банк по поводу кредита",
+    datetime: "2026-04-22T09:00:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Купить продукты на неделю",
+    datetime: "2026-03-22T11:30:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Тренировка в спортзале",
+    datetime: "2026-03-22T14:00:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Починить кран на кухне",
+    datetime: "2026-03-22T17:00:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Посмотреть сериал с женой",
+    datetime: "2026-03-22T21:00:00",
+  },
 
+  {
+    id: uuidv4(),
+    content: "Встреча с клиентом по проекту",
+    datetime: "2026-03-16T10:00:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Оплатить коммунальные услуги",
+    datetime: "2026-03-16T12:00:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Забрать ребёнка из школы",
+    datetime: "2026-03-16T15:30:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Записаться к стоматологу",
+    datetime: "2026-03-16T16:00:00",
+  },
+
+  {
+    id: uuidv4(),
+    content: "Код-ревью pull request от Алексея",
+    datetime: "2026-03-17T09:30:00",
+  },
+  { id: uuidv4(), content: "Обед с другом", datetime: "2026-03-17T13:00:00" },
+  {
+    id: uuidv4(),
+    content: "Купить подарок на день рождения",
+    datetime: "2026-03-17T15:00:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Онлайн-курс по TypeScript",
+    datetime: "2026-03-17T19:00:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Приготовить ужин",
+    datetime: "2026-03-17T20:00:00",
+  },
+
+  {
+    id: uuidv4(),
+    content: "Стендап с командой",
+    datetime: "2026-03-18T09:30:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Написать отчёт за неделю",
+    datetime: "2026-03-18T11:00:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Пробежка в парке",
+    datetime: "2026-03-18T13:30:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Позвонить маме",
+    datetime: "2026-03-18T17:00:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Почитать книгу перед сном",
+    datetime: "2026-03-18T22:00:00",
+  },
+
+  {
+    id: uuidv4(),
+    content: "Деплой новой версии приложения",
+    datetime: "2026-03-19T10:00:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Поход в IKEA за полкой",
+    datetime: "2026-03-19T14:00:00",
+  },
+  {
+    id: uuidv4(),
+    content: "Ужин с родителями",
+    datetime: "2026-03-19T19:30:00",
+  },
+];
 export default function Main() {
-  const TasksData = [
-    {
-      content: "Позвонить в банк по поводу кредита",
-      datetime: "2026-04-22T09:00:00",
-    },
-    { content: "Купить продукты на неделю", datetime: "2026-03-22T11:30:00" },
-    { content: "Тренировка в спортзале", datetime: "2026-03-22T14:00:00" },
-    { content: "Починить кран на кухне", datetime: "2026-03-22T17:00:00" },
-    { content: "Посмотреть сериал с женой", datetime: "2026-03-22T21:00:00" },
-
-    {
-      content: "Встреча с клиентом по проекту",
-      datetime: "2026-03-16T10:00:00",
-    },
-    {
-      content: "Оплатить коммунальные услуги",
-      datetime: "2026-03-16T12:00:00",
-    },
-    { content: "Забрать ребёнка из школы", datetime: "2026-03-16T15:30:00" },
-    { content: "Записаться к стоматологу", datetime: "2026-03-16T16:00:00" },
-
-    {
-      content: "Код-ревью pull request от Алексея",
-      datetime: "2026-03-17T09:30:00",
-    },
-    { content: "Обед с другом", datetime: "2026-03-17T13:00:00" },
-    {
-      content: "Купить подарок на день рождения",
-      datetime: "2026-03-17T15:00:00",
-    },
-    { content: "Онлайн-курс по TypeScript", datetime: "2026-03-17T19:00:00" },
-    { content: "Приготовить ужин", datetime: "2026-03-17T20:00:00" },
-
-    { content: "Стендап с командой", datetime: "2026-03-18T09:30:00" },
-    { content: "Написать отчёт за неделю", datetime: "2026-03-18T11:00:00" },
-    { content: "Пробежка в парке", datetime: "2026-03-18T13:30:00" },
-    { content: "Позвонить маме", datetime: "2026-03-18T17:00:00" },
-    { content: "Почитать книгу перед сном", datetime: "2026-03-18T22:00:00" },
-
-    {
-      content: "Деплой новой версии приложения",
-      datetime: "2026-03-19T10:00:00",
-    },
-    { content: "Поход в IKEA за полкой", datetime: "2026-03-19T14:00:00" },
-    { content: "Ужин с родителями", datetime: "2026-03-19T19:30:00" },
-  ];
   function createDay(date: Date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
@@ -99,6 +165,7 @@ export default function Main() {
     "Today",
     "Tomorrow",
   ]);
+  const [isHover, setIsHover] = useState<string>("");
   return (
     <main className="mt-4 flex flex-col">
       <p className="font-montserrat text-center font-medium text-base mb-4">
@@ -117,7 +184,7 @@ export default function Main() {
                     : [...isShown, category],
                 )
               }
-              className="cursor-pointer"
+              className={`cursor-pointer text-[#243956] ${isShown.includes(category) ? "rotate-0" : "-rotate-90"}`}
             />
             <p
               className={`${
@@ -136,9 +203,15 @@ export default function Main() {
           {isShown.includes(category) && (
             <div className="flex flex-col gap-1">
               {tasks.map((itemTask) => (
-                <div>
+                <div key={itemTask.id}>
                   <div className="flex gap-2">
-                    <Icon name="done" size={12} />
+                    <IconButton
+                      name={isHover === itemTask.id ? "doneChecked" : "done"}
+                      className="hover:cursor-pointer"
+                      size={12}
+                      onMouseEnter={() => setIsHover(itemTask.id)}
+                      onMouseLeave={() => setIsHover("")}
+                    />
                     <div>
                       <p className="font-roboto text-xs">{itemTask.content}</p>
                       <div className="flex gap-1">
@@ -158,9 +231,11 @@ export default function Main() {
                   <hr className="my-1 rounded-lg text-[#182639]" />
                 </div>
               ))}
-              <button className="rounded-2xl bg-[#232E3C] font-roboto text-[10px] text-[#BEBEBE] p-0.5 cursor-pointer">
-                Add task
-              </button>
+              {category != "Overdue" && (
+                <button className="rounded-2xl bg-[#232E3C] font-roboto text-[10px] text-[#BEBEBE] p-0.5 cursor-pointer">
+                  Add task
+                </button>
+              )}
             </div>
           )}
         </section>
