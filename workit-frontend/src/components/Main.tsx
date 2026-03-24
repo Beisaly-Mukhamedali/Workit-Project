@@ -6,52 +6,49 @@ import IconButton from "./IconButton";
 export default function Main() {
   const TasksData = [
     {
-      date: "2026-03-22",
-      tasks: [
-        { content: "Позвонить в банк по поводу кредита", time: "09:00" },
-        { content: "Купить продукты на неделю", time: "11:30" },
-        { content: "Тренировка в спортзале", time: "14:00" },
-        { content: "Починить кран на кухне", time: "17:00" },
-        { content: "Посмотреть сериал с женой", time: "21:00" },
-      ],
+      content: "Позвонить в банк по поводу кредита",
+      datetime: "2026-04-22T09:00:00",
+    },
+    { content: "Купить продукты на неделю", datetime: "2026-03-22T11:30:00" },
+    { content: "Тренировка в спортзале", datetime: "2026-03-22T14:00:00" },
+    { content: "Починить кран на кухне", datetime: "2026-03-22T17:00:00" },
+    { content: "Посмотреть сериал с женой", datetime: "2026-03-22T21:00:00" },
+
+    {
+      content: "Встреча с клиентом по проекту",
+      datetime: "2026-03-16T10:00:00",
     },
     {
-      date: "2026-03-16",
-      tasks: [
-        { content: "Встреча с клиентом по проекту", time: "10:00" },
-        { content: "Оплатить коммунальные услуги", time: "12:00" },
-        { content: "Забрать ребёнка из школы", time: "15:30" },
-        { content: "Записаться к стоматологу", time: "16:00" },
-      ],
+      content: "Оплатить коммунальные услуги",
+      datetime: "2026-03-16T12:00:00",
     },
+    { content: "Забрать ребёнка из школы", datetime: "2026-03-16T15:30:00" },
+    { content: "Записаться к стоматологу", datetime: "2026-03-16T16:00:00" },
+
     {
-      date: "2026-03-17",
-      tasks: [
-        { content: "Код-ревью pull request от Алексея", time: "09:30" },
-        { content: "Обед с другом", time: "13:00" },
-        { content: "Купить подарок на день рождения", time: "15:00" },
-        { content: "Онлайн-курс по TypeScript", time: "19:00" },
-        { content: "Приготовить ужин", time: "20:00" },
-      ],
+      content: "Код-ревью pull request от Алексея",
+      datetime: "2026-03-17T09:30:00",
     },
+    { content: "Обед с другом", datetime: "2026-03-17T13:00:00" },
     {
-      date: "2026-03-18",
-      tasks: [
-        { content: "Стендап с командой", time: "09:30" },
-        { content: "Написать отчёт за неделю", time: "11:00" },
-        { content: "Пробежка в парке", time: "13:30" },
-        { content: "Позвонить маме", time: "17:00" },
-        { content: "Почитать книгу перед сном", time: "22:00" },
-      ],
+      content: "Купить подарок на день рождения",
+      datetime: "2026-03-17T15:00:00",
     },
+    { content: "Онлайн-курс по TypeScript", datetime: "2026-03-17T19:00:00" },
+    { content: "Приготовить ужин", datetime: "2026-03-17T20:00:00" },
+
+    { content: "Стендап с командой", datetime: "2026-03-18T09:30:00" },
+    { content: "Написать отчёт за неделю", datetime: "2026-03-18T11:00:00" },
+    { content: "Пробежка в парке", datetime: "2026-03-18T13:30:00" },
+    { content: "Позвонить маме", datetime: "2026-03-18T17:00:00" },
+    { content: "Почитать книгу перед сном", datetime: "2026-03-18T22:00:00" },
+
     {
-      date: "2026-03-19",
-      tasks: [
-        { content: "Деплой новой версии приложения", time: "10:00" },
-        { content: "Поход в IKEA за полкой", time: "14:00" },
-        { content: "Ужин с родителями", time: "19:30" },
-      ],
+      content: "Деплой новой версии приложения",
+      datetime: "2026-03-19T10:00:00",
     },
+    { content: "Поход в IKEA за полкой", datetime: "2026-03-19T14:00:00" },
+    { content: "Ужин с родителями", datetime: "2026-03-19T19:30:00" },
   ];
   function createDay(date: Date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -77,21 +74,21 @@ export default function Main() {
     };
     if (!TasksData) return emptyCategories;
     return TasksData.reduce((acc, itemTask) => {
-      const date = new Date(itemTask.date);
+      const date = new Date(itemTask.datetime.split("T")[0]);
       if (isSame(date, today)) {
-        acc.Today.push(...itemTask.tasks);
+        acc.Today.push(itemTask);
       } else if (isSame(date, tomorrow)) {
-        acc.Tomorrow.push(...itemTask.tasks);
+        acc.Tomorrow.push(itemTask);
       } else if (isSame(date, yesterday)) {
-        const yesterdayTasks = itemTask.tasks.map((item) => ({
-          ...item,
-          time: item.time + " (Yesterday)",
-        }));
-        acc.Overdue.push(...yesterdayTasks);
+        const yesterdayTask = {
+          ...itemTask,
+          datetime: `${itemTask.datetime} (Yesterday)`,
+        };
+        acc.Overdue.push(yesterdayTask);
       } else if (date.toISOString() < today.toISOString()) {
-        acc.Overdue.push(...itemTask.tasks);
+        acc.Overdue.push(itemTask);
       } else {
-        acc.Future.push(...itemTask.tasks);
+        acc.Future.push(itemTask);
       }
       return acc;
     }, emptyCategories);
@@ -147,7 +144,13 @@ export default function Main() {
                       <div className="flex gap-1">
                         <Icon name="clock" size={8} />
                         <p className="font-roboto text-[6px] text-[#7DE484]">
-                          {itemTask.time}
+                          {category != "Future"
+                            ? itemTask.datetime.split("T")[1].slice(0, 5)
+                            : itemTask.datetime
+                                .split("T")[0]
+                                .replaceAll("-", ".") +
+                              " " +
+                              itemTask.datetime.split("T")[1].slice(0, 5)}
                         </p>
                       </div>
                     </div>

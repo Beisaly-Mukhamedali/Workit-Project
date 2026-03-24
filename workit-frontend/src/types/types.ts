@@ -1,4 +1,4 @@
 export type TaskType = {
     content: string,
-    time: string
+    datetime: string
 }
